@@ -1,0 +1,18 @@
+{
+  "name": "tripmap-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "seed": "node seed.js"
+  },
+  "author": "Aleksi Kaistinen",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.29"
+  }
+}
