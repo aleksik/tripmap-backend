@@ -42,7 +42,7 @@ router.post('/auth', (req, res) => {
     if (err) throw err;
 
     if (!user) {
-      return res.json({
+      return res.json(403, {
         success: false,
         message: 'Authentication failed'
       });
@@ -58,7 +58,7 @@ router.post('/auth', (req, res) => {
         const cleanUser = Object.assign({}, user.toObject());
         delete cleanUser.password;
 
-        return res.json({
+        return res.json(200, {
           success: true,
           message: 'Authentication successfull',
           token,
@@ -66,7 +66,7 @@ router.post('/auth', (req, res) => {
         });
 
       }
-      res.json({
+      res.json(403, {
         success: false,
         message: 'Authentication failed'
       });
