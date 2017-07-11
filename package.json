@@ -2,6 +2,9 @@
   "name": "tripmap-backend",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "8.1.3"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,6 +13,7 @@
   "author": "Aleksi Kaistinen",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",

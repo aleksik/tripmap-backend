@@ -1,0 +1,6 @@
+{
+  "name": "TripMap backend",
+  "description": "A backend for TripMap app",
+  "repository": "https://github.com/aleksik/tripmap-backend",
+  "image": "heroku/nodejs"
+}
