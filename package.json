@@ -8,15 +8,24 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "seed": "node seed.js"
   },
   "author": "Aleksi Kaistinen",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.3",
-    "mongodb": "^2.2.29"
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.11.1",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

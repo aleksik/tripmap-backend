@@ -1,34 +1,29 @@
-require('dotenv').config();
-
 const express = require('express');
-const app = express();
+const mongoose = require('mongoose');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const MongoClient = require('mongodb').MongoClient;
+const passport = require('passport');
+const config = require('./config');
+const app = express();
 
-let db;
+// Database connection
+mongoose.Promise = global.Promise;
+mongoose.connect(config.database, { useMongoClient: true });
 
-MongoClient.connect(process.env.MONGODB_URI, (err, database) => {
-  if (err) return console.log(err);
-  db = database;
-});
-
+// Additional middlewares
+app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.json({ status: 'oukkidoukki' });
-});
+// Passport
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
-app.get('/places', (req, res) => {
-  db.collection('places').find().toArray()
-    .then(places => res.send(places))
-    .catch(err => console.log(err));
-});
+// Routes
+app.get('/', (req, res) => res.sendStatus(200));
+app.use('/users', require('./routes/users'));
+app.use('/places', require('./routes/places'));
 
-const port = process.env.PORT || 9000;
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+app.listen(config.port, console.log(`Listening on port ${config.port}`));
