@@ -50,14 +50,21 @@ router.post('/auth', (req, res) => {
 
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (isMatch && !err) {
+
         const token = jwt.sign(user, config.secret, {
           expiresIn: "2 days"
         });
+
+        const cleanUser = Object.assign({}, user.toObject());
+        delete cleanUser.password;
+
         return res.json({
           success: true,
           message: 'Authentication successfull',
-          token
+          token,
+          user: cleanUser
         });
+
       }
       res.json({
         success: false,
