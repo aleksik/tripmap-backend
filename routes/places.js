@@ -15,7 +15,7 @@ router.post('/', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
 
-  const newPlace = new Place({
+  Place.create({
     name: req.body.name,
     description: req.body.description,
     category: req.body.category,
@@ -23,9 +23,7 @@ router.post('/', passport.authenticate('jwt', {
       lat: req.body.position.lat,
       lng: req.body.position.lng
     }
-  });
-
-  newPlace.save(err => {
+  }, (err, place) => {
     if (err) {
       return res.json({
         success: false,
@@ -34,10 +32,10 @@ router.post('/', passport.authenticate('jwt', {
     }
     res.json({
       success: true,
-      message: 'Place created'
+      message: 'Place created',
+      place
     });
-  });
-
+  });  
 });
 
 // Update
