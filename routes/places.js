@@ -20,17 +20,22 @@ router.post('/', passport.authenticate('jwt', {
     description: req.body.description,
     category: req.body.category,
     position: {
-      lat: req.body.position.lat,
-      lng: req.body.position.lng
+      lat: req.body.position && req.body.position.lat,
+      lng: req.body.position && req.body.position.lng
     }
   }, (err, place) => {
     if (err) {
-      return res.json({
+      const errors = {};
+      Object.entries(err.errors).forEach(([field, { kind }]) => {
+        errors[field] = kind;
+      });
+      return res.status(400).json({
         success: false,
-        message: 'Could not create place'
+        message: 'Could not create place',
+        errors
       });
     }
-    res.json({
+    res.status(200).json({
       success: true,
       message: 'Place created',
       place
@@ -47,12 +52,12 @@ router.post('/:id', passport.authenticate('jwt', {
 
   Place.findOneAndUpdate({ _id: req.params.id, _user: req.user._id}, updatedPlace, (err, place) => {
     if (err) {
-      return res.json({
+      return res.json(400, {
         success: false,
         message: 'Could not update place'
       });
     }
-    return res.json({
+    return res.json(200, {
       success: true,
       message: 'Place updated'
     });
